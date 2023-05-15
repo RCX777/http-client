@@ -32,6 +32,10 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 $(BIN_DIR)/$(TARGET): $(OBJECTS) | $(BIN_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
+# Run rule
+run: $(BIN_DIR)/$(TARGET)
+	@./$^
+
 # Clean rule
 clean:
 	rm -rf $(TARGET).zip $(BUILD_DIR) $(BIN_DIR)

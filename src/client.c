@@ -9,12 +9,14 @@
 
 #include "parser.h"
 #include "colors.h"
+#include "startup.h"
+
 
 char *client_exit(size_t argc, char **argv);
-
-
 int main(void)
 {
+    startup(); // Print startup message
+
     command_t cmds[] = {
         {.fp = client_exit, .name = "exit"}
     };
