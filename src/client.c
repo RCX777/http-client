@@ -259,6 +259,9 @@ char *client_get_logout(size_t argc, char **argv)
         cookie = 0;
     }
 
+    free(cookie); cookie = NULL;
+    free(token);  token  = NULL;
+
     free(message);
     close(sockfd);
     sockfd = 0;

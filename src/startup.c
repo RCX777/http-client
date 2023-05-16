@@ -7,7 +7,7 @@
 #include "startup.h"
 
 #define PROGNAME "HttpClient"
-#define VERSION  "0.1.1"
+#define VERSION  "1.0.1"
 #ifdef linux
     #define PLATFORM "Linux"
 #endif
