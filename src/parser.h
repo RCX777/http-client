@@ -4,6 +4,8 @@
 
 #include <stdio.h>  // For size_t
 
+extern char prompt[];
+
 typedef struct command {
     char *(*fp)(size_t argc, char **argv);
     char name[BUFSIZ];

@@ -9,6 +9,8 @@
 
 #include "parser.h"
 
+char prompt[BUFSIZ] = ">>> ";
+
 static size_t parse_by_whitespace(char *buf, char **argv)
 {
     size_t argc = 0;
@@ -28,10 +30,10 @@ char *parser_loop(command_t cmdv[], size_t cmdc)
     char  *error_msg       = NULL;
 
     for (;;) {
+input_loop:
         memset(lbuffer, 0, sizeof(lbuffer));
         memset(cmdargv, 0, sizeof(cmdargv));
-
-        write(STDOUT_FILENO, ">>> ", sizeof(">>> "));
+        write(STDOUT_FILENO, prompt, strlen(prompt));
         read(STDIN_FILENO, lbuffer, sizeof(lbuffer));
         cmdargc = parse_by_whitespace(lbuffer, cmdargv);
 
@@ -49,18 +51,18 @@ char *parser_loop(command_t cmdv[], size_t cmdc)
                 } else if (error_msg && !strcmp(error_msg, "Success")) {
                     return error_msg;
                 }
-                break;
+                goto input_loop;
             }
+        }
 
-            printf(
-                YEL"Warning"reset": Unknown command: "RED"%s"reset"\n"
-                "Available commands are: \n",
-                cmdargv[0]
-            );
+        printf(
+            YEL"Warning"reset": Unknown command: "RED"%s"reset"\n"
+            "Available commands are: \n",
+            cmdargv[0]
+        );
 
-            for (idx = 0; idx < cmdc; ++idx) {
-                printf(" -- "GRN"%s"reset"\n", cmdv[idx].name);
-            }
+        for (idx = 0; idx < cmdc; ++idx) {
+            printf(" -- "GRN"%s"reset"\n", cmdv[idx].name);
         }
     }
 
